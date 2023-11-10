@@ -9,12 +9,17 @@ fruit information webstite based on the Fruityvice API
  however no luck for viewing fruit info and posting a new fruit which should work if a solution is found
 
 10-11-2023 : *another temporary fix for viewfruit.js :
+
 -convert the fetch dependency from fruit.id to fruit.name fix this in fruits.js:
-   <td>
-        Link to={`/fruit/${fruit.name}`} class="action-link">View  /Link
-   <td>
+    
+    <td>
+    Link to={`/fruit/${fruit.name}`} class="action-link">View  /Link
+    <td>
+
 -on viewfruit.js change : 
+    
     (const { id } = useParams();) into : (const { name } = useParams();)
+
 -finally update the fetch request as such:
     
     useEffect(() => {
