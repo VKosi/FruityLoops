@@ -23,18 +23,32 @@ fruit information webstite based on the Fruityvice API
 -finally update the fetch request as such:
     
     useEffect(() => {
-        axios.get('https://www.fruityvice.com/api/fruit/all')
-          .then((response) => {
-            setFruit(response.data[0]);
-            setLoading(false); // Set loading state to false once data is fetched
-          })
-          .catch((error) => {
-            console.error('Error fetching fruit details:', error);
-            alert('Error fetching fruit details.');
-            setLoading(false); // Set loading state to false to display an error message
-            setFruit(null); // Set fruit state to null to display an error message
-          });
-      }, [name]);
+        setLoading(true);
+        axios
+            .get('https://www.fruityvice.com/api/fruit/all')
+            .then((response) => {
+                console.log(name);
+                const fruitIndex = response.data.findIndex((fruit) => fruit.name === name);
+                if (fruitIndex !== -1) {
+                    const selectedFruit = response.data[fruitIndex];
+                    setFruit(selectedFruit);
+
+                } else {
+                    setFruit(null);
+                    console.log(`Fruit with name ${name} not found.`);
+                }
+
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error('Error fetching fruit details:', error);
+                alert('Error fetching fruit details.');
+                setLoading(false);
+                setFruit(null);
+            });
+    }, [name]); 
+    // gets the response with all fruits and searches all data entries using name and 
+    // gets the index on the overall data to display correct fruit details
 
 # Steps
 
