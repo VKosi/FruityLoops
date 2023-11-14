@@ -74,7 +74,7 @@ const FruitTable = () => {
               <td>{fruit.order}</td>
               <td>{fruit.genus}</td>
               <td>
-                <Link to={`/fruit/${fruit.id}`} class="action-link">View</Link>
+                <Link to={`/fruit/${fruit.name}`} class="action-link">View</Link>
               </td>
             </tr>
           ))}
