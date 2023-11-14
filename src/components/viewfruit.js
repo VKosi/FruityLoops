@@ -6,36 +6,33 @@ import './../App.css';
 const FruitDetail = () => {
     const [loading, setLoading] = useState(true); // Track loading state
     const [fruit, setFruit] = useState(null);
-    const { id } = useParams();
+    const { name } = useParams();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
+        setLoading(true);
+        axios
+            .get('https://www.fruityvice.com/api/fruit/all')
+            .then((response) => {
+                console.log(name);
+                const fruitIndex = response.data.findIndex((fruit) => fruit.name === name);
+                if (fruitIndex !== -1) {
+                    const selectedFruit = response.data[fruitIndex];
+                    setFruit(selectedFruit);
 
-                const response = await axios.get(`https://www.fruityvice.com/api/fruit/${id}`);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                } else {
+                    setFruit(null);
+                    console.log(`Fruit with name ${name} not found.`);
                 }
 
-                const data = await response.json();
-                console.log(response); // Log the HTTP response
-                const fruitData = data[0];
-                setFruit(fruitData);
-                setLoading(false); // Set loading state to false once data is fetched
-
-            } catch (error) {
+                setLoading(false);
+            })
+            .catch((error) => {
                 console.error('Error fetching fruit details:', error);
                 alert('Error fetching fruit details.');
-                setLoading(false); // Set loading state to false to display an error message
-                setFruit(null); // Set fruit state to null to display an error message
-            }
-        };
-
-
-
-        fetchData();
-    }, [id]);
+                setLoading(false);
+                setFruit(null);
+            });
+    }, [name]);
 
     return (
         <div>
