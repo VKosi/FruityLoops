@@ -51,7 +51,7 @@ const CreateFruit = () => {
 
 
   const handleSubmit = () => {
-    axios.post('https://www.fruitruityvice.com/api', newFruit)
+    axios.post('https://www.fruitruityvice.com/api/fruit', newFruit)
       .then((response) => {
         // success
         if (response.status === 202) {
